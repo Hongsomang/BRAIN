@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item android:id="@+id/test"
+
+        android:title="치매 건망증 테스트">@android:color/background_light</item>
+
+    <item android:id="@+id/exam"
+
+        android:title="기억력 테스트">@android:color/background_light</item>
+
+    <item android:id="@+id/result"
+
+        android:title="테스트 결과">@android:color/background_light</item>
+
+    <item android:id="@+id/setting"
+        android:title="설정">@android:color/background_light</item>
+
+
+
+
+
+</menu>
