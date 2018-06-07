@@ -31,9 +31,8 @@ public class LockScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.acitivity_lock_screen);
         title=(TextView)findViewById(R.id.lock_qna) ;
         Realm();
@@ -44,7 +43,6 @@ public class LockScreenActivity extends AppCompatActivity {
         lock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                id++;
                 finish();
             }
         });

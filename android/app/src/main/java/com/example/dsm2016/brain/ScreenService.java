@@ -18,7 +18,6 @@ public class ScreenService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -26,7 +25,6 @@ public class ScreenService extends Service {
         IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
         registerReceiver(mReciver, intentFilter);
     }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
