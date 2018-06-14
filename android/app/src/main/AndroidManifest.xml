@@ -24,10 +24,7 @@
         </activity>
         <activity android:name=".LockScreenActivity"
                   android:showOnLockScreen="true"
-                  android:screenOrientation="sensorPortrait">
-
-        </activity>
-        <activity android:name=".ExActivity">
+                   android:screenOrientation="sensorPortrait">
 
         </activity>
         <activity android:name=".SettingActivity"/>

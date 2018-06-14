@@ -5,7 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.example.dsm2016.brain.DB.DB_Qna;
 import com.example.dsm2016.brain.DB.DB_Test;
 import com.example.dsm2016.brain.DB.DB_Test_Check;
+import com.example.dsm2016.brain.Dialog.Dialog_test_result;
 import com.example.dsm2016.brain.Item.Item_Test;
 
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ public class TestAcitivity extends AppCompatActivity {
     private RadioButton forget_btn,dementia_btn;
     private ArrayList<Item_Test> item_tests=new ArrayList<>();
     private Realm mRealm=null;
+    private LinearLayout linearLayout;
     int count=0;
     private String[] qustion={
             "물건 잘못 놓기",
@@ -72,13 +76,14 @@ public class TestAcitivity extends AppCompatActivity {
             "은행에서 인출하는데 비밀번호가 생각나지 않거나 출금방법을 몰라 쩔쩔맨다.",
             "무기력증에 빠져 수동적이 되거나 일을 하도록 북돋아줘야 일을 하게 된다."
     };
+    private Dialog_test_result dialog_test_result;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         back=(Button)findViewById(R.id.test_back);
         next=(Button)findViewById(R.id.test_next_btn);
-
+        //linearLayout=(LinearLayout)findViewById(R.id.result_layout);
         question_num=(TextView)findViewById(R.id.question_num);
         question_content=(TextView)findViewById(R.id.question_content);
 
@@ -87,7 +92,13 @@ public class TestAcitivity extends AppCompatActivity {
         forget_btn=(RadioButton)findViewById(R.id.forget_btn);
         dementia_btn=(RadioButton)findViewById(R.id.dementia_btn);
 
+
+        dialog_test_result=new Dialog_test_result(this);
+        WindowManager.LayoutParams wm = dialog_test_result.getWindow().getAttributes();
+        wm.copyFrom(dialog_test_result.getWindow().getAttributes());
+
         next.setVisibility(View.GONE);
+//        linearLayout.setVisibility(View.GONE);
         Log.d("tag","제제발");
         try{
             mRealm = Realm.getDefaultInstance();
@@ -161,8 +172,10 @@ public class TestAcitivity extends AppCompatActivity {
     }
     public void test(int count){
         Log.d("test",String.valueOf(count));
-        if(count==10){
+        if(count>=10){
             Toast.makeText(getApplicationContext(),"테스트 끝",Toast.LENGTH_LONG).show();
+            //linearLayout.setVisibility(View.VISIBLE);
+            dialog_test_result.show();
             Realm();
             RealmResults<DB_Test_Check> results=mRealm.where(DB_Test_Check.class).findAll();
             for(int i=0;i<results.size();i++){
@@ -186,7 +199,9 @@ public class TestAcitivity extends AppCompatActivity {
 
     public void radio_btn(){
         count=count+1;
-
+        if(count>10){
+            test(count);
+        }
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int id) {
