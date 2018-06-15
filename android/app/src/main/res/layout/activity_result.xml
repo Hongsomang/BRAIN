@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.Toolbar
+        app:contentInsetStart="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#e83e4b">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="결과"
+            android:textColor="#ffff"
+            android:textSize="16sp"
+            android:gravity="center"/>
+    </android.support.v7.widget.Toolbar>
+    
+</LinearLayout>

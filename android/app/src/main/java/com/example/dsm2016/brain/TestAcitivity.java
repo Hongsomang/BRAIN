@@ -212,6 +212,7 @@ public class TestAcitivity extends AppCompatActivity {
                         public void onClick(View view) {
                             Log.d("gk","건방증");
                             Realm();
+                            mRealm.beginTransaction();
                             DB_Test_Check db_test_check=mRealm.createObject(DB_Test_Check.class);
                             db_test_check.setId(count-1);
                             db_test_check.setCheck("건망증");
@@ -227,6 +228,7 @@ public class TestAcitivity extends AppCompatActivity {
                         public void onClick(View view) {
                             Log.d("gk","치매");
                             Realm();
+                            mRealm.beginTransaction();
                             DB_Test_Check db_test_check=mRealm.createObject(DB_Test_Check.class);
                             db_test_check.setId(count-1);
                             db_test_check.setCheck("치매");
@@ -277,7 +279,6 @@ public class TestAcitivity extends AppCompatActivity {
                     .build();
             mRealm=Realm.getInstance(config);
         }
-        mRealm.beginTransaction();
     }
 
 
