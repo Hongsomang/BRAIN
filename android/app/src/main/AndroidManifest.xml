@@ -31,7 +31,8 @@
         <activity android:name=".TestAcitivity"/>
         <receiver android:name=".ScreenReciver"/>
         <service android:name=".ScreenService"/>
-
+        <activity android:name=".ResultActivity"
+            android:hardwareAccelerated="true"/>
     </application>
 
 

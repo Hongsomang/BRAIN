@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity  {
     private RecyclerView.Adapter madapter;
     private Dialog_main dialog_main;
     private Realm mRealm;
+    private static Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity  {
                 switch (menuItem.getItemId()){
                     case R.id.test:
                         Toast.makeText(getApplication(),"메뉴1", Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(getApplicationContext(), TestAcitivity.class);
+                        intent=new Intent(getApplicationContext(), TestAcitivity.class);
                         startActivity(intent);
                         break;
                     case R.id.exam:
@@ -145,12 +146,13 @@ public class MainActivity extends AppCompatActivity  {
                         break;
                     case R.id.result:
                         Toast.makeText(getApplication(),"메뉴3", Toast.LENGTH_SHORT).show();
-
+                        intent =new Intent(getApplicationContext(),ResultActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.setting:
                         Toast.makeText(getApplication(),"메뉴4",Toast.LENGTH_LONG).show();
-                        Intent intent1=new Intent(getApplicationContext(),SettingActivity.class);
-                        startActivity(intent1);
+                        intent=new Intent(getApplicationContext(),SettingActivity.class);
+                        startActivity(intent);
                         break;
                     default:
                         break;
