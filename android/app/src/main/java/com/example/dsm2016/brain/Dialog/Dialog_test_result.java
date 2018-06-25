@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.example.dsm2016.brain.Adapter.Adapter_test;
 import com.example.dsm2016.brain.DB.DB_Test_Check;
+import com.example.dsm2016.brain.Item.Item_Dialog_test_reuslt;
 import com.example.dsm2016.brain.Item.Item_Test_result;
 import com.example.dsm2016.brain.R;
 import com.example.dsm2016.brain.TestAcitivity;
@@ -63,9 +64,11 @@ public class Dialog_test_result extends Dialog {
 
             }
         });
-
+        Item_Dialog_test_reuslt dialog=new Item_Dialog_test_reuslt();
+        String key=dialog.getKey();
+        Log.d("key",key);
         Realm();
-        RealmResults<DB_Test_Check> results=mRealm.where(DB_Test_Check.class).findAll();
+        RealmResults<DB_Test_Check> results=mRealm.where(DB_Test_Check.class).equalTo("key",key).findAll();
         for(int i=0;i<results.size();i++){
             DB_Test_Check db_test_check=results.get(i);
             Log.d("DB_Test_Check:",db_test_check.getCheck());

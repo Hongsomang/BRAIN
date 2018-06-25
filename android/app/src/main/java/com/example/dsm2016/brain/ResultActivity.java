@@ -68,14 +68,14 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
             case 1:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,fragment2).commit();
                 result_all.setBackgroundResource(R.drawable.radio_btn_gray);
-                result_qna.setBackgroundResource(R.drawable.radio_btn_red);
-                result_test.setBackgroundResource(R.drawable.radio_btn_gray);
+                result_qna.setBackgroundResource(R.drawable.radio_btn_gray);
+                result_test.setBackgroundResource(R.drawable.radio_btn_red);
                 break;
             case 2:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,fragment3).commit();
                 result_all.setBackgroundResource(R.drawable.radio_btn_gray);
-                result_qna.setBackgroundResource(R.drawable.radio_btn_gray);
-                result_test.setBackgroundResource(R.drawable.radio_btn_red);
+                result_qna.setBackgroundResource(R.drawable.radio_btn_red);
+                result_test.setBackgroundResource(R.drawable.radio_btn_gray);
 
 
         }

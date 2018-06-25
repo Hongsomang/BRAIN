@@ -9,6 +9,7 @@ import io.realm.RealmObject;
 public class DB_Test_Check extends RealmObject{
     private int id;
     private String check;
+    private String key;
 
     public int getId() {
         return id;
@@ -24,5 +25,13 @@ public class DB_Test_Check extends RealmObject{
 
     public void setCheck(String check) {
         this.check = check;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

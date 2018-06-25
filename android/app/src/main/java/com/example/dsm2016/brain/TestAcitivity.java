@@ -14,12 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dsm2016.brain.DB.DB_Qna;
+import com.example.dsm2016.brain.DB.DB_Result_All;
 import com.example.dsm2016.brain.DB.DB_Test;
 import com.example.dsm2016.brain.DB.DB_Test_Check;
 import com.example.dsm2016.brain.Dialog.Dialog_test_result;
+import com.example.dsm2016.brain.Item.Item_Dialog_test_reuslt;
 import com.example.dsm2016.brain.Item.Item_Test;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -36,6 +40,7 @@ public class TestAcitivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private RadioButton forget_btn,dementia_btn;
     private ArrayList<Item_Test> item_tests=new ArrayList<>();
+    private List<String> mlist;
     private Realm mRealm=null;
     private LinearLayout linearLayout;
     int count=0;
@@ -98,6 +103,8 @@ public class TestAcitivity extends AppCompatActivity {
         wm.copyFrom(dialog_test_result.getWindow().getAttributes());
 
         next.setVisibility(View.GONE);
+
+        mlist=new ArrayList<>();
 //        linearLayout.setVisibility(View.GONE);
         Log.d("tag","제제발");
         try{
@@ -136,8 +143,8 @@ public class TestAcitivity extends AppCompatActivity {
 
 
         }
-
-           test(count);
+        Log.d("countㄴㄴㄴㄴㄴㄴㄴ:",String.valueOf(count));
+        content();
 
        /* for(int i=1;i<=10;i++){
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -149,7 +156,6 @@ public class TestAcitivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 Log.d("gk","건방증");
-
                             }
                         });
                     }
@@ -170,105 +176,77 @@ public class TestAcitivity extends AppCompatActivity {
 
 
     }
-    public void test(int count){
-        Log.d("test",String.valueOf(count));
-        if(count>=10){
-            Toast.makeText(getApplicationContext(),"테스트 끝",Toast.LENGTH_LONG).show();
-            //linearLayout.setVisibility(View.VISIBLE);
-            dialog_test_result.show();
-            Realm();
-            RealmResults<DB_Test_Check> results=mRealm.where(DB_Test_Check.class).findAll();
-            for(int i=0;i<results.size();i++){
-                DB_Test_Check check=results.get(i);
-                Log.d("results.size():",String.valueOf(results.size()));
-                Log.d("results_Check",String.valueOf(check.getId())+"번"+" "+check.getCheck());
+    public void content(){
+        count++;
+        Log.d("countㄴㄴㄴㄴㄴㄴㄴ:",String.valueOf(count));
+       if(count>=10){
+           Count c=new Count();
+           Realm();
+           mRealm.beginTransaction();
+            for(int i=0;i<mlist.size();i++){
+                DB_Test_Check db_test_check=mRealm.createObject(DB_Test_Check.class);
+                db_test_check.setId(i+1);
+                db_test_check.setCheck(mlist.get(i));
+                db_test_check.setKey("테스트"+c.count());
             }
 
+            DB_Result_All db_result_all=mRealm.createObject(DB_Result_All.class);
+            db_result_all.setKey("테스트"+c.count());
+            db_result_all.setKind(0);
+            mRealm.commitTransaction();
+            Log.d("Db저장","테스트 내용");
+            Item_Dialog_test_reuslt Key_item=new Item_Dialog_test_reuslt();
+            Key_item.setKey("테스트"+c.count());
+            finish_btn();
 
-        }
-        else{
-            content(count+1);
-            question_num.setText(item_tests.get(count).getId());
-            question_content.setText(item_tests.get(count).getQuestion_content());
-            forget_btn.setText(item_tests.get(count).getForget_content());
-            dementia_btn.setText(item_tests.get(count).getDementia_content());
-
-            radio_btn();
-        }
+       }else{
+           Realm();
+           DB_Test db_test=mRealm.where(DB_Test.class).equalTo("id",count).findFirst();
+           Log.d("db_test:",db_test.toString());
+           question_num.setText(String.valueOf(db_test.getId()));
+           question_content.setText(db_test.getQuestion_content());
+           forget_btn.setText(db_test.getForget_content());
+           dementia_btn.setText(db_test.getDementia_content());
+           radio();
+       }
     }
-
-    public void radio_btn(){
-        count=count+1;
-        if(count>10){
-            test(count);
-        }
+    public void radio(){
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int id) {
-                if(id==R.id.forget_btn){
-                    next.setVisibility(View.VISIBLE);
-                    next.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Log.d("gk","건방증");
-                            Realm();
-                            mRealm.beginTransaction();
-                            DB_Test_Check db_test_check=mRealm.createObject(DB_Test_Check.class);
-                            db_test_check.setId(count-1);
-                            db_test_check.setCheck("건망증");
-                            mRealm.commitTransaction();
-                            test(count);
-                        }
-                    });
-                }
-                else if(id==R.id.dementia_btn){
-                    next.setVisibility(View.VISIBLE);
-                    next.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Log.d("gk","치매");
-                            Realm();
-                            mRealm.beginTransaction();
-                            DB_Test_Check db_test_check=mRealm.createObject(DB_Test_Check.class);
-                            db_test_check.setId(count-1);
-                            db_test_check.setCheck("치매");
-                            mRealm.commitTransaction();
-
-                            test(count);
-                        }
-                    });
+                switch (id){
+                    case R.id.forget_btn:
+                        next.setVisibility(View.VISIBLE);
+                        next_btn("건망증");
+                        break;
+                    case R.id.dementia_btn:
+                        next.setVisibility(View.VISIBLE);
+                        next_btn("치매");
+                        break;
                 }
             }
         });
-
+    }
+    public void next_btn(final String value){
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mlist.add(value);
+                content();
+            }
+        });
     }
 
-   public void content(int i){
-        try{
-            mRealm = Realm.getDefaultInstance();
-        }catch (Exception e){
-            RealmConfiguration config=new RealmConfiguration.Builder()
-                    .deleteRealmIfMigrationNeeded()
-                    .build();
-            mRealm=Realm.getInstance(config);
-        }
-        Log.d("dfdf","content");
-       RealmResults<DB_Test> results=mRealm.where(DB_Test.class).equalTo("id",i).findAll();
-       Log.d("results.size():",String.valueOf(results.size()));
-       Log.d("results.toString()",results.toString());
-       for(int j=0;j<results.size();j++){
-           DB_Test db_test1=results.get(j);
-           String forget=db_test1.getForget_content();
-           String dementia=db_test1.getDementia_content();
-           String question_num=String.valueOf(db_test1.getId());
-           String question_content=db_test1.getQuestion_content();
-           item_tests.add(new Item_Test(question_num,question_content,forget,dementia));
-           Log.d("질문", "protocol : " +db_test1);
-
-       }
-
-
+    public void finish_btn(){
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog_test_result.show();
+            }
+        });
     }
+
+
     public void Realm(){
         try {
             mRealm=Realm.getDefaultInstance();
