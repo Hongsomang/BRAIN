@@ -11,9 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.dsm2016.brain.DB.DB_Qna;
 import com.example.dsm2016.brain.DB.DB_Result_All;
 import com.example.dsm2016.brain.DB.DB_Test;
 import com.example.dsm2016.brain.DB.DB_Test_Check;
@@ -23,12 +21,10 @@ import com.example.dsm2016.brain.Item.Item_Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
-import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by ghdth on 2018-05-11.
@@ -180,7 +176,7 @@ public class TestAcitivity extends AppCompatActivity {
         count++;
         Log.d("countㄴㄴㄴㄴㄴㄴㄴ:",String.valueOf(count));
        if(count>=10){
-           Count c=new Count();
+           Count_Test c=new Count_Test();
            Realm();
            mRealm.beginTransaction();
             for(int i=0;i<mlist.size();i++){
@@ -197,6 +193,7 @@ public class TestAcitivity extends AppCompatActivity {
             Log.d("Db저장","테스트 내용");
             Item_Dialog_test_reuslt Key_item=new Item_Dialog_test_reuslt();
             Key_item.setKey("테스트"+c.count());
+            Log.d("테스트 get",Key_item.getKey());
             finish_btn();
 
        }else{

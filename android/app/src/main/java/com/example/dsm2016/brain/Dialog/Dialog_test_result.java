@@ -64,8 +64,8 @@ public class Dialog_test_result extends Dialog {
 
             }
         });
-        Item_Dialog_test_reuslt dialog=new Item_Dialog_test_reuslt();
-        String key=dialog.getKey();
+        Item_Dialog_test_reuslt Key_item=new Item_Dialog_test_reuslt();
+        String key=Key_item.getKey();
         Log.d("key",key);
         Realm();
         RealmResults<DB_Test_Check> results=mRealm.where(DB_Test_Check.class).equalTo("key",key).findAll();

@@ -54,8 +54,7 @@ public class MainActivity extends AppCompatActivity  {
         WindowManager.LayoutParams wm = dialog_main.getWindow().getAttributes();
         wm.copyFrom(dialog_main.getWindow().getAttributes());
 
-        wm.height=780;
-        wm.width=780;
+
         plus=(Button)findViewById(R.id.plus_btn);
 
 
@@ -142,7 +141,8 @@ public class MainActivity extends AppCompatActivity  {
                         break;
                     case R.id.exam:
                         Toast.makeText(getApplication(),"메뉴2", Toast.LENGTH_SHORT).show();
-
+                        intent=new Intent(getApplicationContext(),TTSAcitivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.result:
                         Toast.makeText(getApplication(),"메뉴3", Toast.LENGTH_SHORT).show();

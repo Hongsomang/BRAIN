@@ -16,11 +16,7 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".LockScreenActivity"
                   android:showOnLockScreen="true"
@@ -33,6 +29,13 @@
         <service android:name=".ScreenService"/>
         <activity android:name=".ResultActivity"
             android:hardwareAccelerated="true"/>
+        <activity android:name=".TTSAcitivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 
