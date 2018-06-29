@@ -49,7 +49,7 @@
             android:layout_weight="1"
             android:background="@drawable/radio_btn_gray"
             android:layout_marginLeft="5dp"
-            android:text="qna 결과"
+            android:text="TTS 결과"
             android:textSize="14sp"
             />
     </LinearLayout>

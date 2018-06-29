@@ -7,9 +7,11 @@ package com.example.dsm2016.brain.Item;
 public class Item_Result {
     private String title;
     private String date;
-    public Item_Result(String title,String date){
+    private int kind;
+    public Item_Result(String title,String date ,int kind){
         this.title=title;
         this.date=date;
+        this.kind=kind;
     }
     public String getTitle() {
         return title;
@@ -25,5 +27,13 @@ public class Item_Result {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getKind() {
+        return kind;
+    }
+
+    public void setKind(int kind) {
+        this.kind = kind;
     }
 }

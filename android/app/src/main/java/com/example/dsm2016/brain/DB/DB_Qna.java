@@ -12,6 +12,8 @@ public class DB_Qna extends RealmObject {
     private String question;
     private String answer;
 
+
+
     public int getId() {
         return id;
     }

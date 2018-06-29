@@ -11,10 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.dsm2016.brain.Adapter.Adapter_Result;
+import com.example.dsm2016.brain.DB.DB_Result_All;
+import com.example.dsm2016.brain.DB.DB_Test_Check;
+import com.example.dsm2016.brain.DBActivity;
 import com.example.dsm2016.brain.Item.Item_Result;
 import com.example.dsm2016.brain.R;
 
 import java.util.ArrayList;
+
+import io.realm.RealmResults;
 
 /**
  * Created by ghdth on 2018-06-17.
@@ -37,10 +42,17 @@ public class Fragment_Result_All extends android.support.v4.app.Fragment {
         mItem=new ArrayList<>();
         mAdapter=new Adapter_Result(mItem,getContext());
         recyclerView.setAdapter(mAdapter);
+       /* mItem.add(new Item_Result("dfdfdfdfdf","dfdfdfdfdfdfdfdf"));
         mItem.add(new Item_Result("dfdfdfdfdf","dfdfdfdfdfdfdfdf"));
-        mItem.add(new Item_Result("dfdfdfdfdf","dfdfdfdfdfdfdfdf"));
-        mItem.add(new Item_Result("dfdfdfdfdf","dfdfdfdfdfdfdfdf"));
+        mItem.add(new Item_Result("dfdfdfdfdf","dfdfdfdfdfdfdfdf"));*/
 
+        DBActivity.mRealm.init(getContext());
+        DBActivity.Realm();
+        RealmResults<DB_Result_All> result=DBActivity.mRealm.where(DB_Result_All.class).findAll();
+        for(int i=0;i<result.size();i++){
+            DB_Result_All db_result_all=result.get(i);
+            mItem.add(new Item_Result(db_result_all.getKey(),db_result_all.getDate(),db_result_all.getKind()));
+        }
         return view;
     }
 }

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dsm2016.brain.DB.DB_Result_All;
 import com.example.dsm2016.brain.DB.DB_Test;
@@ -19,7 +20,9 @@ import com.example.dsm2016.brain.Dialog.Dialog_test_result;
 import com.example.dsm2016.brain.Item.Item_Dialog_test_reuslt;
 import com.example.dsm2016.brain.Item.Item_Test;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -40,6 +43,11 @@ public class TestAcitivity extends AppCompatActivity {
     private Realm mRealm=null;
     private LinearLayout linearLayout;
     int count=0;
+
+    private long mNow;
+    private Date mDate;
+    private SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
     private String[] qustion={
             "물건 잘못 놓기",
             "언어장애",
@@ -94,9 +102,6 @@ public class TestAcitivity extends AppCompatActivity {
         dementia_btn=(RadioButton)findViewById(R.id.dementia_btn);
 
 
-        dialog_test_result=new Dialog_test_result(this);
-        WindowManager.LayoutParams wm = dialog_test_result.getWindow().getAttributes();
-        wm.copyFrom(dialog_test_result.getWindow().getAttributes());
 
         next.setVisibility(View.GONE);
 
@@ -175,25 +180,8 @@ public class TestAcitivity extends AppCompatActivity {
     public void content(){
         count++;
         Log.d("countㄴㄴㄴㄴㄴㄴㄴ:",String.valueOf(count));
-       if(count>=10){
-           Count_Test c=new Count_Test();
-           Realm();
-           mRealm.beginTransaction();
-            for(int i=0;i<mlist.size();i++){
-                DB_Test_Check db_test_check=mRealm.createObject(DB_Test_Check.class);
-                db_test_check.setId(i+1);
-                db_test_check.setCheck(mlist.get(i));
-                db_test_check.setKey("테스트"+c.count());
-            }
+       if(count>10){
 
-            DB_Result_All db_result_all=mRealm.createObject(DB_Result_All.class);
-            db_result_all.setKey("테스트"+c.count());
-            db_result_all.setKind(0);
-            mRealm.commitTransaction();
-            Log.d("Db저장","테스트 내용");
-            Item_Dialog_test_reuslt Key_item=new Item_Dialog_test_reuslt();
-            Key_item.setKey("테스트"+c.count());
-            Log.d("테스트 get",Key_item.getKey());
             finish_btn();
 
        }else{
@@ -235,14 +223,39 @@ public class TestAcitivity extends AppCompatActivity {
     }
 
     public void finish_btn(){
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog_test_result.show();
-            }
-        });
+        Count_Test c=new Count_Test();
+        String date=Date();
+        Realm();
+        mRealm.beginTransaction();
+        for(int i=0;i<mlist.size();i++){
+            DB_Test_Check db_test_check=mRealm.createObject(DB_Test_Check.class);
+            db_test_check.setId(i+1);
+            db_test_check.setCheck(mlist.get(i));
+            db_test_check.setKey("테스트"+c.count());
+        }
+
+        DB_Result_All db_result_all=mRealm.createObject(DB_Result_All.class);
+        db_result_all.setKey("테스트"+c.count());
+        db_result_all.setKind(0);
+        db_result_all.setDate(date);
+        mRealm.commitTransaction();
+        Log.d("Db저장","테스트 내용");
+
+        Toast.makeText(getApplication(),"다이얼로그",Toast.LENGTH_LONG).show();
+        dialog_test_result=new Dialog_test_result();
+        Bundle bundle=new Bundle();
+        bundle.putString("key","test"+c.count());
+        dialog_test_result.setArguments(bundle);
+        dialog_test_result.show(getFragmentManager(),"test");
+
     }
 
+    public String Date(){
+        mNow = System.currentTimeMillis();
+        mDate = new Date(mNow);
+
+        return mFormat.format(mDate);
+    }
 
     public void Realm(){
         try {

@@ -141,8 +141,8 @@ public class TTSAcitivity extends AppCompatActivity{
                 Toast.makeText(getApplicationContext(),"성공",Toast.LENGTH_LONG).show();
                 random();
                 TTS(answer_id);
+                count=count+1;
                 Log.d("count:맞은 개수",String.valueOf(count));
-                count++;
             }
             else{
                 Toast.makeText(getApplicationContext(),"다시입력해주세요",Toast.LENGTH_LONG).show();
@@ -258,8 +258,10 @@ public class TTSAcitivity extends AppCompatActivity{
 
     public void finish_btn(){
         String date =Date();
-        key_count++;
+        key_count=Count_TTS.count();
 
+
+        Log.d("answer_count",String.valueOf(count));
         DBActivity.Realm();
         DBActivity.mRealm.beginTransaction();
 
@@ -271,17 +273,17 @@ public class TTSAcitivity extends AppCompatActivity{
         DB_Result_All db_result_all=DBActivity.mRealm.createObject(DB_Result_All.class);
         db_result_all.setKind(1);
         db_result_all.setKey("TTS"+key_count);
-
+        db_result_all.setDate(date);
         DBActivity.mRealm.commitTransaction();
 
+        Log.d("TTS","TTS"+key_count);
         Toast.makeText(getApplicationContext(),"끝",Toast.LENGTH_LONG).show();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction tr=fm.beginTransaction();
+
         dialog_tts_result=new Dialog_TTS_Result();
         Bundle bundle =new Bundle();
         bundle.putString("key","TTS"+key_count);
         dialog_tts_result.setArguments(bundle);
-       // dialog_tts_result.show(tr);
+         dialog_tts_result.show(getFragmentManager(),"dfd");
     }
 
 }
