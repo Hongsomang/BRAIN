@@ -59,7 +59,7 @@ import io.realm.RealmResults;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView test_name,date,tts_count;
+        private TextView test_name,date,tts_count,result_forget,result_dementia;
         private RecyclerView test_rv,qna_rv;
         private RecyclerView.Adapter test_madater,qna_madater;
         private RecyclerView.LayoutManager layoutManager;
@@ -68,6 +68,7 @@ import io.realm.RealmResults;
         private LinearLayout test_content_layout,title_layout;
         private RelativeLayout tts_content_layout;
         private CardView cardView;
+        private int forget_count=0,dementia_count=0;
         public MyViewHolder(View itemView) {
             super(itemView);
 
@@ -83,6 +84,8 @@ import io.realm.RealmResults;
             test_name=(TextView)itemView.findViewById(R.id.test_name_tv);
              date=(TextView)itemView.findViewById(R.id.test_date_tv);
              tts_count=(TextView)itemView.findViewById(R.id.result_tts_count);
+             result_forget=(TextView)itemView.findViewById(R.id.result_test_forget);
+             result_dementia=(TextView)itemView.findViewById(R.id.result_test_dementia);
 
              test_content_layout=(LinearLayout)itemView.findViewById(R.id.result_test_content);
              tts_content_layout=(RelativeLayout) itemView.findViewById(R.id.result_tts_content);
@@ -101,13 +104,18 @@ import io.realm.RealmResults;
                 DB_Test_Check db_test_check=results.get(i);
                 if(db_test_check.getCheck().equals("건망증")){
                     test_item.add(new Item_Test_result(String.valueOf(i+1),R.drawable.check,R.drawable.not_check));
-
+                    forget_count++;
                 }
                 else if(db_test_check.getCheck().equals("치매")){
                     test_item.add(new Item_Test_result(String.valueOf(i+1),R.drawable.not_check,R.drawable.check));
+                    dementia_count++;
                 }
             }
 
+
+            result_forget.setText(String.valueOf(forget_count));
+            result_dementia.setText(String.valueOf(dementia_count));
+            DBActivity.Realm();
             DB_TTS_check db_tts_check=DBActivity.mRealm.where(DB_TTS_check.class).findFirst();
             tts_count.setText(String.valueOf(db_tts_check.getTTS_answer()));
         }

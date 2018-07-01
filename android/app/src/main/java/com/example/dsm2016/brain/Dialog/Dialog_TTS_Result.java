@@ -68,4 +68,12 @@ public class Dialog_TTS_Result extends DialogFragment {
         return view;
 
     }
+
+   @Override
+    public void onResume() {
+        super.onResume();
+        int with=getResources().getDimensionPixelSize(R.dimen.with);
+        int heigh=getResources().getDimensionPixelSize(R.dimen.heigh);
+        getDialog().getWindow().setLayout(with,heigh);
+    }
 }

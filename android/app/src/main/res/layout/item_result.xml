@@ -90,7 +90,38 @@
             >
 
         </android.support.v7.widget.RecyclerView>
-
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"
+                android:text="건망증:"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/result_test_forget"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.35"/>
+            <TextView
+                android:text="치매:"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"/>
+            <TextView
+                android:id="@+id/result_test_dementia"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.35"/>
+        </LinearLayout>
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/result_tts_content"
